@@ -1,6 +1,6 @@
 ---
 - name: Attach subs
-  rhsm_manifest:
+  redhat_manifest:
     name: "{{ configure_katello_manifest_name }}"
     username: "{{ configure_rhsm_username }}"
     password: "{{ configure_rhsm_password }}"
@@ -13,7 +13,7 @@
   register: subs
 
 - name: Download manifest
-  rhsm_manifest:
+  redhat_manifest:
     name: "{{ configure_katello_manifest_name }}"
     username: "{{ configure_rhsm_username }}"
     password: "{{ configure_rhsm_password }}"
