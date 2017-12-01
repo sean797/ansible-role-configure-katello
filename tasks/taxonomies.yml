@@ -1,0 +1,11 @@
+---
+- name: Create Organizations
+  foreman_organization:
+    username: "{{ configure_katello_username }}"
+    password: "{{ configure_katello_password }}"
+    server_url: "{{ configure_katello_server_url }}"
+    verify_ssl: "{{ configure_katello_verify_ssl }}"
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  with_items: "{{ configure_katello_organizations }}"
+  when: configure_katello_organizations is defined

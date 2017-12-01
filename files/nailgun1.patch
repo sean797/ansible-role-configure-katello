@@ -1,0 +1,54 @@
+From 190c6f278340cbae95360a7ec4a8e3c5fec75815 Mon Sep 17 00:00:00 2001
+From: Sean O'Keeffe <seanokeeffe797@gmail.com>
+Date: Fri, 24 Nov 2017 13:31:55 +0000
+Subject: [PATCH] Remove org from sync_plan api_path
+
+---
+ nailgun/entities.py    | 7 +++++--
+ tests/test_entities.py | 4 ++++
+ 2 files changed, 9 insertions(+), 2 deletions(-)
+
+diff --git a/nailgun/entities.py b/nailgun/entities.py
+index f2a3964..61181f8 100644
+--- a/nailgun/entities.py
++++ b/nailgun/entities.py
+@@ -5282,7 +5282,6 @@ class SyncPlan(
+     """
+ 
+     def __init__(self, server_config=None, **kwargs):
+-        _check_for_value('organization', kwargs)
+         self._fields = {
+             'description': entity_fields.StringField(),
+             'enabled': entity_fields.BooleanField(required=True),
+@@ -5303,9 +5302,13 @@ class SyncPlan(
+             'sync_date': entity_fields.DateTimeField(required=True),
+         }
+         super(SyncPlan, self).__init__(server_config, **kwargs)
++        try:
++            path_prefix = self.organization.path()
++        except AttributeError:
++            path_prefix = '/katello/api/'
+         self._meta = {
+             # pylint:disable=no-member
+-            'api_path': '{0}/sync_plans'.format(self.organization.path()),
++            'api_path': '{0}/sync_plans'.format(path_prefix),
+         }
+ 
+     def read(self, entity=None, attrs=None, ignore=None):
+diff --git a/tests/test_entities.py b/tests/test_entities.py
+index ab70f2d..0f29fe6 100644
+--- a/tests/test_entities.py
++++ b/tests/test_entities.py
+@@ -418,6 +418,10 @@ class PathTestCase(TestCase):
+             'organizations/1/sync_plans/2',
+             entities.SyncPlan(self.cfg, id=2, organization=1).path()
+         )
++        self.assertIn(
++            'katello/api/sync_plans/2',
++            entities.SyncPlan(self.cfg, id=2).path()
++        )
+         for which in ('add_products', 'remove_products'):
+             path = entities.SyncPlan(
+                 self.cfg,
+-- 
+2.13.6

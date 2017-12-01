@@ -1,0 +1,16 @@
+---
+- name: Create Activation Keys
+  katello_activation_key:
+    username: "{{ configure_katello_username }}"
+    password: "{{ configure_katello_password }}"
+    server_url: "{{ configure_katello_server_url }}"
+    verify_ssl: "{{ configure_katello_verify_ssl }}"
+    name: "{{ item.activation_key }}"
+    organization: "{{ item.organization }}"
+    lifecycle_environment: "{{ item.environment }}"
+    content_view: "{{ item.name }}"
+    subscriptions: "{{ item.subscriptions }}"
+  with_items: "{{ configure_katello_content_views }}"
+  when:
+    - configure_katello_content_views is defined
+    - item.activation_key is defined

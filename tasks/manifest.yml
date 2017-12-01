@@ -1,0 +1,40 @@
+---
+- name: Attach subs
+  rhsm_manifest:
+    name: "{{ configure_katello_manifest_name }}"
+    username: "{{ configure_rhsm_username }}"
+    password: "{{ configure_rhsm_password }}"
+    pool_id: "{{ item.pool_id }}"
+    quantity: "{{ item.quantity }}"
+    state: "{{ item.state }}"
+    validate_certs: "{{ configure_rhsm_verify_ssl }}"
+  with_items: "{{ configure_katello_subscriptions }}"
+  when: configure_katello_subscriptions is defined
+  register: subs
+
+- name: Download manifest
+  rhsm_manifest:
+    name: "{{ configure_katello_manifest_name }}"
+    username: "{{ configure_rhsm_username }}"
+    password: "{{ configure_rhsm_password }}"
+    validate_certs: "{{ configure_rhsm_verify_ssl }}"
+    path: "{{ ansible_env['HOME'] }}/{{ configure_katello_manifest_name }}.zip" 
+  when:
+    - configure_katello_manifest_name is defined
+    - subs.changed
+
+- name: "Upload Katello manifests"
+  katello_manifest:
+    username: "{{ configure_katello_username }}"
+    password: "{{ configure_katello_password }}"
+    server_url: "{{ configure_katello_server_url }}"
+    verify_ssl: "{{ configure_katello_verify_ssl }}"
+    organization: "{{ item.name }}"
+    manifest_path: "{{ ansible_env['HOME'] }}/{{ item.manifest }}.zip"
+    state: present
+  with_items: "{{ configure_katello_organizations }}"
+  when:
+    - subs.changed
+    - configure_katello_organizations is defined
+    - item.manifest is defined
+    - item.state == "present"

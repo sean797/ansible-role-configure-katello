@@ -1,0 +1,18 @@
+---
+- name: Create Content Views
+  katello_content_view:
+    username: "{{ configure_katello_username }}"
+    password: "{{ configure_katello_password }}"
+    server_url: "{{ configure_katello_server_url }}"
+    verify_ssl: "{{ configure_katello_verify_ssl }}"
+    name: "{{ item.name }}"
+    organization: "{{ item.organization }}"
+    repositories: "{{ item.repositories }}"
+  with_items: "{{ configure_katello_content_views }}"
+  when: configure_katello_content_views is defined
+  notify:
+    - Publish Content Views
+    - Promote Content Views
+
+- name: Publish & Promote Content Views
+  meta: flush_handlers

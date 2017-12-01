@@ -1,0 +1,51 @@
+---
+- include_tasks: install.yml
+  tags:
+    - install
+
+- include_tasks: taxonomies.yml
+  tags:
+    - taxonomies
+    - tax
+    - org
+
+- include_tasks: manifest.yml
+  tags:
+    - manifest
+
+- include_tasks: repositories.yml
+  tags:
+    - repos
+    - repositories
+    - repository
+
+- include_tasks: sync_plans.yml
+  tags:
+    - sync_plans
+
+- include_tasks: lifecycle_environments.yml
+  tags:
+    - lifecycle_environments
+    - lenv
+    - lenvs
+
+- include_tasks: content_views.yml
+  tags:
+    - content_views
+    - content_view
+    - cvs
+    - cv
+
+- include_tasks: content_view_versions.yml
+  tags:
+    - content_view_versions
+    - content_view_version
+    - cvvs
+    - cvv
+
+- include_tasks: activation_keys.yml
+  tags:
+    - activation_keys
+    - activation_key
+    - aks
+    - ak

@@ -1,0 +1,104 @@
+---
+configure_katello_username: admin
+configure_katello_password: "{{ vault_katello_admin_password | default('changeme') }}"
+configure_katello_server_url: "https://{{ ansible_fqdn }}"
+configure_katello_verify_ssl: false
+configure_katello_organizations:
+  - { name: AMCE, state: present, manifest: "{{ ansible_fqdn }}" }
+  - { name: Default Organization, state: absent }
+
+# TODO, allow more than 1 manifest upload
+configure_katello_manifest_name: "{{ ansible_fqdn }}"
+configure_rhsm_username: myuser
+configure_rhsm_password: "{{ vault_rhsm_password | default('changeme') }}" 
+configure_rhsm_verify_ssl: false
+configure_katello_subscriptions:
+  - { pool_id: xxxxx, state: present, quantity: 9 }
+
+configure_katello_repository_sets:
+  - name: Red Hat Enterprise Linux 7 Server (RPMs)
+    repo_name: Red Hat Enterprise Linux 7 Server RPMs x86_64 7Server
+    organization: AMCE
+    product: Red Hat Enterprise Linux Server
+    state: enabled
+    repositories:
+      - releasever: 7Server
+        basearch: x86_64
+  - name: Red Hat Satellite Tools 6.2 (for RHEL 7 Server) (RPMs)
+    repo_name: Red Hat Satellite Tools 6.2 for RHEL 7 Server RPMs x86_64
+    organization: AMCE
+    product: Red Hat Enterprise Linux Server
+    state: enabled
+    repositories:
+      - basearch: x86_64
+  - name: Red Hat Enterprise Linux 7 Server - Extras (RPMs)
+    repo_name: Red Hat Enterprise Linux 7 Server - Extras RPMs x86_64
+    organization: AMCE
+    product: Red Hat Enterprise Linux Server
+    state: enabled
+    repositories:
+      - basearch: x86_64
+  - name: Red Hat OpenShift Container Platform 3.6 (RPMs)
+    repo_name: Red Hat OpenShift Container Platform 3.6 RPMs x86_64 
+    organization: AMCE
+    product: Red Hat OpenShift Container Platform
+    state: enabled
+    repositories:
+      - basearch: x86_64
+  - name: Red Hat Enterprise Linux Fast Datapath (RHEL 7 Server) (RPMs)
+    repo_name: Red Hat Enterprise Linux Fast Datapath RHEL 7 Server RPMs x86_64 7Server
+    organization: AMCE
+    product: Red Hat Enterprise Linux Fast Datapath
+    state: enabled
+    repositories:
+      - basearch: x86_64
+        releasever: 7Server
+
+configure_katello_lifecycle_environment:
+  - name: Production
+    organization: AMCE
+    prior: Library
+    state: present
+
+configure_katello_sync_plans:
+  - name: Red Hat Sync Plan
+    organization: AMCE
+    interval: daily
+    enabled: true
+    sync_date: "2017-01-01 00:00:00"
+    products:
+      - name: Red Hat Enterprise Linux Server
+      - name: Red Hat Enterprise Linux Fast Datapath
+      - name: Red Hat OpenShift Container Platform
+
+configure_katello_content_views:
+  - name: OpenShift
+    environment: Production
+    organization: AMCE
+    repositories:
+      - name: Red Hat Enterprise Linux 7 Server RPMs x86_64 7Server
+        product: Red Hat Enterprise Linux Server
+      - name: Red Hat Satellite Tools 6.2 for RHEL 7 Server RPMs x86_64
+        product: Red Hat Enterprise Linux Server
+      - name: Red Hat Enterprise Linux 7 Server - Extras RPMs x86_64
+        product: Red Hat Enterprise Linux Server
+      - name: Red Hat Enterprise Linux Fast Datapath RHEL 7 Server RPMs x86_64 7Server
+        product: Red Hat Enterprise Linux Fast Datapath 
+      - name: Red Hat OpenShift Container Platform 3.6 RPMs x86_64
+        product: Red Hat OpenShift Container Platform
+    activation_key: openshift
+    subscriptions:
+      - name: Red Hat OpenShift Container Platform, Standard (1-2 Sockets)
+  - name: RHEL
+    environment: Production
+    organization: AMCE
+    repositories:
+      - name: Red Hat Enterprise Linux 7 Server RPMs x86_64 7Server
+        product: Red Hat Enterprise Linux Server
+      - name: Red Hat Enterprise Linux 7 Server - Extras RPMs x86_64
+        product: Red Hat Enterprise Linux Server
+      - name: Red Hat Satellite Tools 6.2 for RHEL 7 Server RPMs x86_64
+        product: Red Hat Enterprise Linux Server
+    activation_key: rhel
+    subscriptions:
+      - name: 60 Day Supported Red Hat Satellite Capsule Server Evaluation

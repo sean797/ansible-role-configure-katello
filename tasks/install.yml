@@ -1,0 +1,36 @@
+---
+- name: Install epel
+  package:
+    name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    state: present
+
+- name: Install pip
+  package:
+    name: python-pip
+    state: present
+
+- name: Install nailgun
+  pip:
+    name: https://github.com/SatelliteQE/nailgun/tarball/6.2.z
+
+- name: Install python-foreman
+  pip:
+    name: git+https://github.com/Nosmoht/python-foreman.git#master 
+
+- name: patch nailgun
+  patch:
+    src: "files/{{ item }}" 
+    basedir: /usr/lib/python2.7/site-packages/
+    strip: 1
+  with_items:
+    - nailgun1.patch  # https://github.com/SatelliteQE/nailgun/pull/461
+    - nailgun2.patch  # https://github.com/SatelliteQE/nailgun/pull/462
+    - nailgun3.patch  # https://github.com/SatelliteQE/nailgun/pull/463
+    - nailgun4.patch  # https://github.com/SatelliteQE/nailgun/pull/464
+    - nailgun5.patch  # https://github.com/SatelliteQE/nailgun/pull/466
+
+#- name: patch nailgun
+#  lineinfile:
+#    path: /usr/lib/python2.7/site-packages/nailgun/entities.py
+#    state: absent
+#    regexp: "backend_identifier"

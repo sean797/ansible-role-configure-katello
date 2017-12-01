@@ -1,0 +1,15 @@
+---
+- name: Create lifecycle environments
+  katello_lifecycle_environment:
+    username: "{{ configure_katello_username }}"
+    password: "{{ configure_katello_password }}"
+    server_url: "{{ configure_katello_server_url }}"
+    verify_ssl: "{{ configure_katello_verify_ssl }}"
+    name: "{{ item.name }}"
+    label: "{{ item.name }}"
+    organization: "{{ item.organization }}"
+    prior: "{{ item.prior }}"
+    description: "{{ item.description | default('') }}"
+    state: "{{ item.state }}"
+  with_items: "{{ configure_katello_lifecycle_environment }}"
+  when: configure_katello_lifecycle_environment is defined
