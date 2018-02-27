@@ -23,14 +23,4 @@
     basedir: /usr/lib/python2.7/site-packages/
     strip: 1
   with_items:
-    - nailgun1.patch  # https://github.com/SatelliteQE/nailgun/pull/461
     - nailgun2.patch  # https://github.com/SatelliteQE/nailgun/pull/462
-    - nailgun3.patch  # https://github.com/SatelliteQE/nailgun/pull/463
-    - nailgun4.patch  # https://github.com/SatelliteQE/nailgun/pull/464
-    - nailgun5.patch  # https://github.com/SatelliteQE/nailgun/pull/466
-
-#- name: patch nailgun
-#  lineinfile:
-#    path: /usr/lib/python2.7/site-packages/nailgun/entities.py
-#    state: absent
-#    regexp: "backend_identifier"
