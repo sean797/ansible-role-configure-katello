@@ -1,7 +1,12 @@
 ---
 - include_tasks: install.yml
+  when: configure_katello_install_deps
   tags:
     - install
+
+- include_tasks: install.yml
+  tags:
+    - patch
 
 - include_tasks: taxonomies.yml
   tags:

@@ -16,11 +16,3 @@
 - name: Install python-foreman
   pip:
     name: git+https://github.com/Nosmoht/python-foreman.git#master 
-
-- name: patch nailgun
-  patch:
-    src: "files/{{ item }}" 
-    basedir: /usr/lib/python2.7/site-packages/
-    strip: 1
-  with_items:
-    - nailgun2.patch  # https://github.com/SatelliteQE/nailgun/pull/462

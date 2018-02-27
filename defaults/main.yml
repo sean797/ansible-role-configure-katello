@@ -3,6 +3,8 @@ configure_katello_username: admin
 configure_katello_password: "{{ vault_katello_admin_password | default('changeme') }}"
 configure_katello_server_url: "https://{{ ansible_fqdn }}"
 configure_katello_verify_ssl: false
+configure_katello_install_deps: true
+
 configure_katello_organizations:
   - { name: AMCE, state: present, manifest: "{{ ansible_fqdn }}" }
   - { name: Default Organization, state: absent }
