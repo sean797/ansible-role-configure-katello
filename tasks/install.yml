@@ -11,7 +11,7 @@
 
 - name: Install nailgun
   pip:
-    name: https://github.com/SatelliteQE/nailgun/tarball/6.2.z
+    name: https://github.com/SatelliteQE/nailgun/tarball/master
 
 - name: Install python-foreman
   pip:

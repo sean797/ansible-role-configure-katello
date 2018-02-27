@@ -4,11 +4,7 @@
   tags:
     - install
 
-- include_tasks: install.yml
-  tags:
-    - patch
-
-- include_tasks: taxonomies.yml
+ include_tasks: taxonomies.yml
   tags:
     - taxonomies
     - tax

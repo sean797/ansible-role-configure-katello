@@ -23,6 +23,16 @@
     - configure_katello_manifest_name is defined
     - subs.changed
 
+- name: Copy manifest
+  copy:
+    src: "{{ configure_katello_manifest_name }}.zip"
+    dest: "{{ ansible_env['HOME'] }}/{{ configure_katello_manifest_name }}.zip"
+    mode: 0644
+  when:
+    - configure_katello_manifest_name is defined
+    - configure_katello_copy_manifest 
+  register: manifest
+
 - name: "Upload Katello manifests"
   katello_manifest:
     username: "{{ configure_katello_username }}"
@@ -34,7 +44,7 @@
     state: present
   with_items: "{{ configure_katello_organizations }}"
   when:
-    - subs.changed
+    - subs.changed or manifest.changed
     - configure_katello_organizations is defined
     - item.manifest is defined
     - item.state == "present"
