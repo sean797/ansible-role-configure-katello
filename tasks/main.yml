@@ -4,6 +4,10 @@
   tags:
     - install
 
+- include_tasks: settings.yml
+  tags:
+    -  settings
+
 - include_tasks: taxonomies.yml
   tags:
     - taxonomies

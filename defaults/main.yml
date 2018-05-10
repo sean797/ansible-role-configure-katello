@@ -105,3 +105,6 @@ configure_katello_copy_manifest: false
 #    activation_key: rhel
 #    subscriptions:
 #      - name: 60 Day Supported Red Hat Satellite Capsule Server Evaluation
+#
+#configure_katello_settings:
+#  - { name: default_download_policy, value: immediate }
