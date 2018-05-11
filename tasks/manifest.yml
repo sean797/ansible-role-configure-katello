@@ -9,7 +9,9 @@
     state: "{{ item.state }}"
     validate_certs: "{{ configure_rhsm_verify_ssl }}"
   with_items: "{{ configure_katello_subscriptions }}"
-  when: configure_katello_subscriptions is defined
+  when:
+    - configure_katello_subscriptions is defined
+    - not configure_katello_copy_manifest
   register: subs
 
 - name: Download manifest
@@ -21,7 +23,7 @@
     path: "{{ ansible_env['HOME'] }}/{{ configure_katello_manifest_name }}.zip" 
   when:
     - configure_katello_manifest_name is defined
-    - subs.changed
+    - not configure_katello_copy_manifest
 
 - name: Copy manifest
   copy:
@@ -30,7 +32,7 @@
     mode: 0644
   when:
     - configure_katello_manifest_name is defined
-    - configure_katello_copy_manifest 
+    - configure_katello_copy_manifest
   register: manifest
 
 - name: "Upload Katello manifests"
