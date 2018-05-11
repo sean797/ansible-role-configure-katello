@@ -41,6 +41,7 @@
     verify_ssl: "{{ configure_katello_verify_ssl }}"
     organization: "{{ item.name }}"
     manifest_path: "{{ ansible_env['HOME'] }}/{{ item.manifest }}.zip"
+    redhat_repository_url: "{{ item.redhat_repository_url | default(omit) }}"
     state: present
   with_items: "{{ configure_katello_organizations }}"
   when:
