@@ -4,10 +4,11 @@
     name: epel
     state: present
     description: EPEL Yum repo
-    baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+    baseurl: https://dl.fedoraproject.org/pub/epel/$releasever/$basearch/
     proxy: "{{ configure_katello_proxy | default(omit) }}"
     proxy_password: "{{ configure_katello_proxy_password | default(omit) }}"
     proxy_username: "{{ configure_katello_proxy_username | default(omit) }}"
+    gpgkey: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$releasever 
 
 - name: Install pip
   package:
