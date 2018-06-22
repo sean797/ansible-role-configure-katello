@@ -13,6 +13,9 @@
     - configure_katello_subscriptions is defined
     - not configure_katello_copy_manifest
   register: subs
+  environment:
+    http_proxy: "{{ (configure_katello_proxy is defined) | ternary( (configure_katello_proxy | urlsplit('scheme')) + '://' + configure_katello_proxy_username + ':' + configure_katello_proxy_password + '@' + (configure_katello_proxy | urlsplit('hostname')) + ':' + (configure_katello_proxy | urlsplit('port') | string), '') }}"
+    https_proxy: "{{ (configure_katello_proxy is defined) | ternary( (configure_katello_proxy | urlsplit('scheme')) + '://' + configure_katello_proxy_username + ':' + configure_katello_proxy_password + '@' + (configure_katello_proxy | urlsplit('hostname')) + ':' + (configure_katello_proxy | urlsplit('port') | string), '') }}"
 
 - name: Download manifest
   redhat_manifest:
@@ -24,6 +27,9 @@
   when:
     - configure_katello_manifest_name is defined
     - not configure_katello_copy_manifest
+  environment:
+    http_proxy: "{{ (configure_katello_proxy is defined) | ternary( (configure_katello_proxy | urlsplit('scheme')) + '://' + configure_katello_proxy_username + ':' + configure_katello_proxy_password + '@' + (configure_katello_proxy | urlsplit('hostname')) + ':' + (configure_katello_proxy | urlsplit('port') | string), '') }}"
+    https_proxy: "{{ (configure_katello_proxy is defined) | ternary( (configure_katello_proxy | urlsplit('scheme')) + '://' + configure_katello_proxy_username + ':' + configure_katello_proxy_password + '@' + (configure_katello_proxy | urlsplit('hostname')) + ':' + (configure_katello_proxy | urlsplit('port') | string), '') }}"
 
 - name: Copy manifest
   copy:
