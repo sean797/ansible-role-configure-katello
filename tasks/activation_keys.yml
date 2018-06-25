@@ -10,6 +10,7 @@
     lifecycle_environment: "{{ item.environment }}"
     content_view: "{{ item.name }}"
     subscriptions: "{{ item.subscriptions }}"
+    auto_attach: "{{ item.auto_attach | default(omit) }}"
   with_items: "{{ configure_katello_content_views }}"
   when:
     - configure_katello_content_views is defined
@@ -26,6 +27,7 @@
     lifecycle_environment: "{{ item.environment }}"
     content_view: "{{ item.content_view }}"
     subscriptions: "{{ item.subscriptions }}"
+    auto_attach: "{{ item.auto_attach | default(omit) }}"
   with_items: "{{ configure_katello_activation_keys }}"
   when:
     - configure_katello_activation_keys is defined
