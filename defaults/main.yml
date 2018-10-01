@@ -1,4 +1,5 @@
 ---
+configure_katello_nailgun_package: nailgun
 configure_katello_username: admin
 configure_katello_password: "{{ vault_katello_admin_password | default('changeme') }}"
 configure_katello_server_url: "https://{{ ansible_fqdn }}"
