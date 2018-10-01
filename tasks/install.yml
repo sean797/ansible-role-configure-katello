@@ -18,4 +18,5 @@
 - name: Install nailgun
   pip:
     name: "{{ configure_katello_nailgun_package }}"
+    version: "{{ configure_katello_nailgun_version | default(omit) }}"
     extra_args: "{{ (configure_katello_proxy is defined) | ternary('--proxy ' + (configure_katello_proxy | urlsplit('scheme')) + '://' + configure_katello_proxy_username + ':' + configure_katello_proxy_password + '@' + (configure_katello_proxy | urlsplit('hostname')) + ':' + (configure_katello_proxy | urlsplit('port') | string), '') }}"
