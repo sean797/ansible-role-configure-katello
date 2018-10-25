@@ -15,11 +15,6 @@
     name: python-pip
     state: present
 
-- name: test is defined
-  debug:
-    msg: Uhhhhhh
-    # msg: "{{ build_extra_args }}"
-
 - name: Build extra arguments when configure_katello_proxy is defined
   set_fact:
     build_extra_args: "{{ '--proxy ' + (configure_katello_proxy | urlsplit('scheme')) + '://' + configure_katello_proxy_username + ':' + configure_katello_proxy_password + '@' + (configure_katello_proxy | urlsplit('hostname')) + ':' + (configure_katello_proxy | urlsplit('port') | string) }}"
