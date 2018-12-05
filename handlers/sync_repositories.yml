@@ -1,0 +1,25 @@
+---
+- name: Kick off sync
+  katello_sync:
+    username: "{{ configure_katello_username }}"
+    password: "{{ configure_katello_password }}"
+    server_url: "{{ configure_katello_server_url }}"
+    verify_ssl: "{{ configure_katello_verify_ssl }}"
+    repository: "{{ item.repo_name }}"
+    product: "{{ item.product }}"
+    organization: "{{ item.organization }}"
+  loop: "{{ configure_katello_repository_sets }}"
+  async: 999999
+  poll: 0
+  register: repo_sync_sleeper
+
+- name: Wait until all Syncs have finished
+  async_status:
+    jid: "{{ repo_sync_sleeper_item.ansible_job_id }}"
+  loop: "{{ repo_sync_sleeper.results }}"
+  loop_control:
+    loop_var: repo_sync_sleeper_item
+  register: async_job_result
+  until: async_job_result.finished
+  retries: 999
+  delay: 10

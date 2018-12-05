@@ -1,14 +1,6 @@
 ---
 - name: sync all repositories
-  katello_sync:
-    username: "{{ configure_katello_username }}"
-    password: "{{ configure_katello_password }}"
-    server_url: "{{ configure_katello_server_url }}"
-    verify_ssl: "{{ configure_katello_verify_ssl }}"
-    repository: "{{ item.repo_name }}"
-    product: "{{ item.product }}"
-    organization: "{{ item.organization }}"
-  with_items: "{{ configure_katello_repository_sets }}"
+  include_tasks: "{{ role_path }}/handlers/sync_repositories.yml"
 
 - name: Publish Content Views
   katello_content_view_publish:
