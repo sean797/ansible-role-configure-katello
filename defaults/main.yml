@@ -2,11 +2,17 @@
 configure_katello_nailgun_package: nailgun
 configure_katello_username: admin
 configure_katello_password: "{{ vault_katello_admin_password | default('changeme') }}"
-configure_katello_server_url: "https://{{ ansible_fqdn }}"
+configure_katello_server_url: "https://{{ inventory_hostname }}"
+# ansible_fqdn picks up internal hostname with EC2 instances
+# configure_katello_server_url: "https://{{ ansible_fqdn }}"
 configure_katello_verify_ssl: false
 configure_katello_install_deps: true
 configure_katello_copy_manifest: false
 configure_katello_force_manifest_upload: false
+
+# configure_katello_proxy: http://bungabunga.com
+# configure_katello_proxy_username: myuser
+# configure_katello_proxy_password: itspassword
 
 #configure_katello_organizations:
 #  - { name: AMCE, state: present, manifest: "{{ ansible_fqdn }}" }
