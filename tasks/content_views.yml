@@ -8,6 +8,7 @@
     name: "{{ item.name }}"
     organization: "{{ item.organization }}"
     repositories: "{{ item.repositories }}"
+    state: "{{ item.state | default(omit) }}"
   with_items: "{{ configure_katello_content_views }}"
   when: configure_katello_content_views is defined
 
