@@ -10,12 +10,6 @@
     repositories: "{{ item.repositories }}"
   with_items: "{{ configure_katello_content_views }}"
   when: configure_katello_content_views is defined
-  notify:
-    - Publish Content Views
-    - Promote Content Views
-
-- name: Publish & Promote Content Views
-  meta: flush_handlers
 
 - name: Create Content View Filters
   katello_content_view_filter:
@@ -41,3 +35,21 @@
     rule_state: "{{ item.rule_state | default(omit) }}"
   with_items: "{{ configure_katello_content_view_filters }}"
   when: configure_katello_content_view_filters is defined
+
+- name: Create Content View Versions
+  katello_content_view_version:
+    username: "{{ configure_katello_username }}"
+    password: "{{ configure_katello_password }}"
+    server_url: "{{ configure_katello_server_url }}"
+    verify_ssl: "{{ configure_katello_verify_ssl }}"
+    content_view: "{{ item.content_view }}"
+    organization: "{{ item.organization }}"
+    current_lifecycle_environment: "{{ item.current_lifecycle_environment | default(omit) }}"
+    force_promote: "{{ item.current_lifecycle_environment | default(omit) }}"
+    force_yum_metadata_regeneration: "{{ item.force_yum_metadata_regeneration | default(omit) }}"
+    lifecycle_environments: "{{ item.lifecycle_environments | default(omit) }}"
+    synchronous: "{{ item.synchronous | default(omit) }}"
+    version: "{{ item.version | default(omit) }}"
+    state: "{{ item.state | default(omit) }}"
+  with_items: "{{ configure_katello_content_view_versions }}"
+  when: configure_katello_content_view_versions is defined
