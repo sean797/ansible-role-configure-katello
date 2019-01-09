@@ -16,3 +16,28 @@
 
 - name: Publish & Promote Content Views
   meta: flush_handlers
+
+- name: Create Content View Filters
+  katello_content_view_filter:
+    username: "{{ configure_katello_username }}"
+    password: "{{ configure_katello_password }}"
+    server_url: "{{ configure_katello_server_url }}"
+    verify_ssl: "{{ configure_katello_verify_ssl }}"
+    content_view: "{{ item.content_view }}"
+    filter_type: "{{ item.filter_type }}"
+    organization: "{{ item.organization }}"
+    date_type: "{{ item.date_type | default(omit) }}"
+    end_date: "{{ item.end_date | default(omit) }}"
+    errata_id: "{{ item.errata_id | default(omit) }}"
+    inclusion: "{{ item.inclusion | default(omit) }}"
+    max_version: "{{ item.max_version | default(omit) }}"
+    min_version: "{{ item.min_version | default(omit) }}"
+    repositories: "{{ item.repositories | default(omit) }}"
+    rule_name: "{{ item.rule_name | default(omit) }}"
+    start_date: "{{ item.start_date | default(omit) }}"
+    types: "{{ item.types | default(omit) }}"
+    version: "{{ item. version| default(omit) }}"
+    filter_state: "{{ item.filter_state | default(omit) }}"
+    rule_state: "{{ item.rule_state | default(omit) }}"
+  with_items: "{{ configure_katello_content_view_filters }}"
+  when: configure_katello_content_view_filters is defined
