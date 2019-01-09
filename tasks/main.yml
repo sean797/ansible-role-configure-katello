@@ -54,3 +54,8 @@
     - activation_key
     - aks
     - ak
+
+- import_tasks: domains.yml
+  tags:
+    - domain
+    - domains

@@ -1,0 +1,14 @@
+---
+- name: Create Domains
+  foreman_domain:
+    username: "{{ configure_katello_username }}"
+    password: "{{ configure_katello_password }}"
+    server_url: "{{ configure_katello_server_url }}"
+    verify_ssl: "{{ configure_katello_verify_ssl }}"
+    name: "{{ item.name }}"
+    organizations: "{{ item.organizations | default(omit) }}"
+    locations: "{{ item.locations | default(omit) }}"
+    dns_proxy: "{{ item.dns_proxy | default(omit) }}"
+    state: "{{ item.state | default(omit) }}"
+  with_items: "{{ configure_katello_domains }}"
+  when: configure_katello_domains is defined
