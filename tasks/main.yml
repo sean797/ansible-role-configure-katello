@@ -1,54 +1,54 @@
 ---
-- include_tasks: install.yml
+- import_tasks: install.yml
   when: configure_katello_install_deps
   tags:
     - install
 
-- include_tasks: settings.yml
+- import_tasks: settings.yml
   tags:
     -  settings
 
-- include_tasks: taxonomies.yml
+- import_tasks: taxonomies.yml
   tags:
     - taxonomies
     - tax
     - org
 
-- include_tasks: manifest.yml
+- import_tasks: manifest.yml
   tags:
     - manifest
 
-- include_tasks: repositories.yml
+- import_tasks: repositories.yml
   tags:
     - repos
     - repositories
     - repository
 
-- include_tasks: sync_plans.yml
+- import_tasks: sync_plans.yml
   tags:
     - sync_plans
 
-- include_tasks: lifecycle_environments.yml
+- import_tasks: lifecycle_environments.yml
   tags:
     - lifecycle_environments
     - lenv
     - lenvs
 
-- include_tasks: content_views.yml
+- import_tasks: content_views.yml
   tags:
     - content_views
     - content_view
     - cvs
     - cv
 
-- include_tasks: content_view_versions.yml
+- import_tasks: content_view_versions.yml
   tags:
     - content_view_versions
     - content_view_version
     - cvvs
     - cvv
 
-- include_tasks: activation_keys.yml
+- import_tasks: activation_keys.yml
   tags:
     - activation_keys
     - activation_key
