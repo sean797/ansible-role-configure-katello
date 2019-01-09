@@ -7,7 +7,7 @@
     verify_ssl: "{{ configure_katello_verify_ssl }}"
     name: "{{ item.name }}"
     organization: "{{ item.organization }}"
-    repositories: "{{ item.repositories }}"
+    repositories: "{{ item.repositories | default(omit) }}"
     state: "{{ item.state | default(omit) }}"
   with_items: "{{ configure_katello_content_views }}"
   when: configure_katello_content_views is defined
