@@ -10,6 +10,6 @@
     organization: "{{ item.organization }}"
     prior: "{{ item.prior }}"
     description: "{{ item.description | default('') }}"
-    state: "{{ item.state }}"
+    state: "{{ item.state | default(omit) }}"
   with_items: "{{ configure_katello_lifecycle_environment }}"
   when: configure_katello_lifecycle_environment is defined
