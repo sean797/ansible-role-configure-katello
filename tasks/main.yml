@@ -41,13 +41,6 @@
     - cvs
     - cv
 
-- import_tasks: content_view_versions.yml
-  tags:
-    - content_view_versions
-    - content_view_version
-    - cvvs
-    - cvv
-
 - import_tasks: activation_keys.yml
   tags:
     - activation_keys
