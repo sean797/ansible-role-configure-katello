@@ -1,54 +1,54 @@
 ---
-- import_tasks: install.yml
+- import_tasks: "{{ role_path }}/tasks/install.yml"
   when: configure_katello_install_deps
   tags:
     - install
 
-- import_tasks: settings.yml
+- import_tasks: "{{ role_path }}/tasks/settings.yml"
   tags:
     -  settings
 
-- import_tasks: taxonomies.yml
+- import_tasks: "{{ role_path }}/tasks/taxonomies.yml"
   tags:
     - taxonomies
     - tax
     - org
 
-- import_tasks: manifest.yml
+- import_tasks: "{{ role_path }}/tasks/manifest.yml"
   tags:
     - manifest
 
-- import_tasks: repositories.yml
+- import_tasks: "{{ role_path }}/tasks/repositories.yml"
   tags:
     - repos
     - repositories
     - repository
 
-- import_tasks: sync_plans.yml
+- import_tasks: "{{ role_path }}/tasks/sync_plans.yml"
   tags:
     - sync_plans
 
-- import_tasks: lifecycle_environments.yml
+- import_tasks: "{{ role_path }}/tasks/lifecycle_environments.yml"
   tags:
     - lifecycle_environments
     - lenv
     - lenvs
 
-- import_tasks: content_views.yml
+- import_tasks: "{{ role_path }}/tasks/content_views.yml"
   tags:
     - content_views
     - content_view
     - cvs
     - cv
 
-- import_tasks: activation_keys.yml
+- import_tasks: "{{ role_path }}/tasks/activation_keys.yml"
   tags:
     - activation_keys
     - activation_key
     - aks
     - ak
 
-- import_tasks: domains.yml
+- import_tasks: "{{ role_path }}/tasks/domains.yml"
   tags:
     - domain
     - domains
