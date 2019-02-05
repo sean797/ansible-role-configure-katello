@@ -18,6 +18,11 @@
   tags:
     - manifest
 
+ import_tasks: "{{ role_path }}/tasks/products.yml"
+  tags:
+    - product
+    - products
+
 - import_tasks: "{{ role_path }}/tasks/repositories.yml"
   tags:
     - repos

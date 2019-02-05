@@ -1,0 +1,12 @@
+---
+- name: Create Content Views
+  katello_content_view:
+    username: "{{ configure_katello_username }}"
+    password: "{{ configure_katello_password }}"
+    server_url: "{{ configure_katello_server_url }}"
+    verify_ssl: "{{ configure_katello_verify_ssl }}"
+    name: "{{ item.name }}"
+    organization: "{{ item.organization }}"
+    state: "{{ item.state | default(omit) }}"
+  with_items: "{{ configure_katello_products }}"
+  when: configure_katello_products is defined
