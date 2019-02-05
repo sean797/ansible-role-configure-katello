@@ -24,8 +24,11 @@
     name: "{{  item.name }}"
     organization: "{{ item.organization }}"
     product: "{{ item.product }}"
-    repositories: "{{ item.repositories }}"
-    state: "{{ item.state }}"
+    state: "{{ item.state | default(omit) }}"
+    content_type: "{{ item.content_type }}"
+    url: "{{ item.url | default(omit) }}"
+    gpg_key: "{{ item.gpg_key | default(omit) }}"
+    download_policy: "{{ item.download_policy | default(omit) }}"
   with_items: "{{ configure_katello_repositories }}"
   when: configure_katello_repositories is defined
   notify:
