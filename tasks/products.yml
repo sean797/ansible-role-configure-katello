@@ -1,5 +1,5 @@
 ---
-- name: Create Content Views
+- name: Create Products
   katello_content_view:
     username: "{{ configure_katello_username }}"
     password: "{{ configure_katello_password }}"
