@@ -1,6 +1,6 @@
 ---
 - name: Create Products
-  katello_content_view:
+  katello_product:
     username: "{{ configure_katello_username }}"
     password: "{{ configure_katello_password }}"
     server_url: "{{ configure_katello_server_url }}"
