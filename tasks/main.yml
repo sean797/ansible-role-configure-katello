@@ -18,7 +18,7 @@
   tags:
     - manifest
 
- import_tasks: "{{ role_path }}/tasks/products.yml"
+- import_tasks: "{{ role_path }}/tasks/products.yml"
   tags:
     - product
     - products
