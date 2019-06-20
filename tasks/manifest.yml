@@ -56,4 +56,3 @@
     - subs.changed or manifest.changed or configure_katello_force_manifest
     - configure_katello_organizations is defined
     - item.manifest is defined
-    - item.state == "present"
