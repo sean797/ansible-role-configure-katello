@@ -12,6 +12,7 @@
   async: 999999
   poll: 0
   register: repo_sync_sleeper
+  when: item.state == "enabled" 
 
 - name: Wait until all Syncs have finished
   async_status:
@@ -23,3 +24,4 @@
   until: async_job_result.finished
   retries: 999
   delay: 10
+  when: repo_sync_sleeper_item.ansible_job_id is defined
